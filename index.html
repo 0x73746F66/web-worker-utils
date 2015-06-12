@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+  <h1 id="greeting">Web Worker Test</h1>
+  
+  <pre id="log">
+      
+  </pre>
+  
+  <script type="text/javascript">
+    if (typeof SharedWorker != 'undefined') {
+        var worker = new Worker('/worker.js');
+        
+        worker.onerror = function(e) {
+            document.getElementById('log').insertAdjacentHTML('beforeEnd','error encountered'+"\n"); 
+            console.error('Ops, something bad occurred!', e);
+        };
+
+        worker.postMessage({
+          do: 'start'
+        });
+        
+        worker.onmessage = function(e) {
+            document.getElementById('log').insertAdjacentHTML('beforeEnd', JSON.stringify(e.data)+"\n" ); 
+            console.debug(e.data);
+        };
+        localStorage.setItem('test1','123');
+        setTimeout(function(){
+
+            worker.postMessage({
+                do: 'info'
+            });
+
+        }, 3000);
+        
+        setTimeout(function(){
+
+            worker.postMessage({
+                do: 'echo',
+                message: 'testing'
+            });
+
+        }, 1000);
+    }
+  </script>
+</body>
+</html>
