@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Hello World</title>
-    <link href="styles/main.css" rel="stylesheet">
+    <link href="https://preview.c9.io/chrisdlangton/web-workers/styles/main.css" rel="stylesheet">
 </head>
 <body>
   <h1 id="greeting">Web Worker Test</h1>
@@ -14,7 +14,7 @@
   
   <script type="text/javascript">
     if (typeof SharedWorker != 'undefined') {
-        var worker = new Worker('/worker.js');
+        var worker = new Worker('https://preview.c9.io/chrisdlangton/web-workers/js/worker.js');
         
         worker.onerror = function(e) {
             document.getElementById('log').insertAdjacentHTML('beforeEnd','error encountered'+"\n"); 
@@ -29,7 +29,7 @@
             document.getElementById('log').insertAdjacentHTML('beforeEnd', JSON.stringify(e.data)+"\n" ); 
             console.debug(e.data);
         };
-        localStorage.setItem('test1','123');
+        
         setTimeout(function(){
 
             worker.postMessage({
@@ -46,6 +46,16 @@
             });
 
         }, 1000);
+    }
+    
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('https://preview.c9.io/chrisdlangton/web-workers/js/service.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ',    registration.scope);
+      }).catch(function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
     }
   </script>
 </body>

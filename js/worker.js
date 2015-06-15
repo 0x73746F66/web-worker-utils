@@ -1,6 +1,10 @@
 (function(){
-    importScripts('xhrHelper.js', 'tXml.js');
-
+    importScripts(
+        'https://preview.c9.io/chrisdlangton/web-workers/js/xhrHelper.js'
+        ,'https://preview.c9.io/chrisdlangton/web-workers/js/tXml.js'
+        //,'https://preview.c9.io/chrisdlangton/web-workers/js/pusher-2.2.min.js'
+    );
+    
     onmessage = function(e) {
         var data = e.data;
 
