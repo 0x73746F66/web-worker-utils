@@ -1,35 +1,33 @@
 (function(){
-    importScripts(
-        'https://preview.c9.io/chrisdlangton/web-workers/js/xhrHelper.js'
-        ,'https://preview.c9.io/chrisdlangton/web-workers/js/tXml.js'
-        //,'https://preview.c9.io/chrisdlangton/web-workers/js/pusher-2.2.min.js'
-    );
-    
-    onmessage = function(e) {
-        var data = e.data;
+  var dbName = 'workerDemo',
+      dbVersion = 1,
+      modules = {};
 
-        switch (data.do) {
-            case 'start':
-                postMessage('WORKER STARTED');
-                
-                break;
-            case 'echo':
-                postMessage(data);
-                
-                break;
-            case 'info':
-                postMessage(JSON.parse(JSON.stringify(navigator)));
-                
-                break;
-            case 'stop':
-                postMessage('WORKER STOPPED');
-                close(); // Terminates the worker.
-                
-                break;
-            default:
-                postMessage('Unknown');
-        }
-        
-    }
+  importScripts(
+      '/chrisdlangton/web-workers/js/modules/Core.js'
+      ,'/chrisdlangton/web-workers/js/modules/DB.js'
+      ,'/chrisdlangton/web-workers/js/modules/File.js'
+      ,'/chrisdlangton/web-workers/js/modules/Demo.js'
+      ,'/chrisdlangton/web-workers/js/modules/xhrHelper.js'
+  );
+
+  modules['Core'] = modules['Core'] || new Core();
+  modules['DB'] = modules['DB'] || new DB(self, dbName, dbVersion);
+  modules['File'] = modules['File'] || new File(self);
+  modules['xhr'] = modules['xhr'] || new XhrHelper();
+  modules['Demo'] = modules['Demo'] || new Demo();
+  self.modules = modules;
+  
+  self.requestFileSystemSync = self.webkitRequestFileSystemSync ||
+                             self.requestFileSystemSync;
+  
+  self.onmessage = function(e) {
+    var data    = e.data,
+        module  = data.do.split('/')[0],
+        method  = data.do.split('/')[1],
+        args    = data.args || {};
+
+    modules[module][method].call(self, args);
+  }
 
 })();
