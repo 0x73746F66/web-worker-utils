@@ -4,22 +4,19 @@
       modules = {};
 
   importScripts(
-      '/chrisdlangton/web-workers/js/modules/Core.js'
-      ,'/chrisdlangton/web-workers/js/modules/DB.js'
-      ,'/chrisdlangton/web-workers/js/modules/File.js'
-      ,'/chrisdlangton/web-workers/js/modules/Demo.js'
-      ,'/chrisdlangton/web-workers/js/modules/xhrHelper.js'
+      '/js/modules/Core.js'
+      ,'/js/modules/DB.js'
+      ,'/js/modules/File.js'
+      ,'/js/modules/Demo.js'
+      ,'/js/modules/xhrHelper.js'
   );
 
-  modules['Core'] = modules['Core'] || new Core();
-  modules['DB'] = modules['DB'] || new DB(self, dbName, dbVersion);
-  modules['File'] = modules['File'] || new File(self);
-  modules['xhr'] = modules['xhr'] || new XhrHelper();
-  modules['Demo'] = modules['Demo'] || new Demo();
-  self.modules = modules;
-  
-  self.requestFileSystemSync = self.webkitRequestFileSystemSync ||
-                             self.requestFileSystemSync;
+  modules['Core']   = modules['Core'] || new Core();
+  modules['DB']     = modules['DB']   || new DB(self, dbName, dbVersion);
+  modules['File']   = modules['File'] || new File(self);
+  modules['xhr']    = modules['xhr']  || new XhrHelper();
+  modules['Demo']   = modules['Demo'] || new Demo();
+  self.modules      = modules;
   
   self.onmessage = function(e) {
     var data    = e.data,

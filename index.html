@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Web Worker Demo</title>
-    <link href="/chrisdlangton/web-workers/styles/main.css" rel="stylesheet">
+    <link href="/styles/main.css" rel="stylesheet">
 </head>
 <body>
   <h1 id="greeting"></h1>
@@ -14,7 +14,7 @@
   
   <script type="text/javascript">
     if (typeof SharedWorker != 'undefined') {
-        var worker = new Worker('/chrisdlangton/web-workers/js/worker.js');
+        var worker = new Worker('/js/worker.js');
         
         worker.onerror = function(e) {
             document.getElementById('log').insertAdjacentHTML('beforeEnd','error encountered'+"\n"); 

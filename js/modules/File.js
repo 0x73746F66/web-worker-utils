@@ -1,5 +1,6 @@
-var File = function(worker){
+var File = function(worker) {
   worker.requestFileSystemSync = worker.webkitRequestFileSystemSync || worker.requestFileSystemSync;
+
   this.fs;
   var paths = []; // Global to hold the list of entry filesystem URLs.
 

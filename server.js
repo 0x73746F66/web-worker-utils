@@ -2,13 +2,13 @@ var http = require("http"),
     url = require("url"),
     path = require("path"),
     fs = require("fs"),
-    port = process.argv[2] || 8888;
+    port = process.env.PORT || 8080;
 
 http.createServer(function(request, response) {
 
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
-
+console.log(uri,filename);
   var contentTypesByExtension = {
     '.html': "text/html",
     '.css':  "text/css",
@@ -43,4 +43,4 @@ http.createServer(function(request, response) {
   });
 }).listen(parseInt(port, 10));
 
-console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
+console.log("Static file server running at\n  => https://web-workers-chrisdlangton.c9.io:" + port + "/\nCTRL + C to shutdown");
