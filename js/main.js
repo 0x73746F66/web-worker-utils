@@ -1,4 +1,5 @@
-if (typeof SharedWorker != 'undefined') {
+
+if (typeof Worker != 'undefined') {
     var worker = new Worker('/js/worker.js');
     
     worker.onerror = function(e) {
@@ -99,7 +100,7 @@ if (typeof SharedWorker != 'undefined') {
 }
 /*
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/chrisdlangton/web-workers/js/service.js').then(function(registration) {
+  navigator.serviceWorker.register('/js/service.js').then(function(registration) {
     // Registration was successful
     console.log('ServiceWorker registration successful with scope: ',    registration.scope);
   }).catch(function(err) {

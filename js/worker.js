@@ -1,7 +1,8 @@
 (function(){
-  var dbName = 'workerDemo',
+  "use strict";
+  var dbName    = 'workerDemo',
       dbVersion = 1,
-      modules = {};
+      modules   = {};
 
   importScripts(
       '/js/modules/Core.js'
@@ -19,10 +20,10 @@
   self.modules      = modules;
   
   self.onmessage = function(e) {
-    var data    = e.data,
-        module  = data.do.split('/')[0],
-        method  = data.do.split('/')[1],
-        args    = data.args || {};
+    var data      = e.data,
+        module    = data.do.split('/')[0],
+        method    = data.do.split('/')[1],
+        args      = data.args || {};
 
     modules[module][method].call(self, args);
   }

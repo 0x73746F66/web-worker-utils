@@ -8,11 +8,19 @@ http.createServer(function(request, response) {
 
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
-console.log(uri,filename);
+
   var contentTypesByExtension = {
-    '.html': "text/html",
-    '.css':  "text/css",
-    '.js':   "text/javascript"
+    '.html':    "text/html",
+    '.css':     "text/css",
+    '.js':      "application/javascript",
+    '.json':    "application/javascript",
+    '.jpeg':    "image/jpeg",
+    '.jpg':     "image/jpeg",
+    '.png':     "image/png",
+    '.ico':     "image/x-icon",
+    '.appcache':"text/cache-manifest",
+    '.webapp':  "application/x-web-app-manifest+json",
+    '.xml':     "application/xml"
   };
 
   fs.exists(filename, function(exists) {
@@ -41,6 +49,8 @@ console.log(uri,filename);
       response.end();
     });
   });
+
+  console.log(request.method, response.statusCode, uri);
 }).listen(parseInt(port, 10));
 
 console.log("Static file server running at\n  => https://web-workers-chrisdlangton.c9.io:" + port + "/\nCTRL + C to shutdown");
