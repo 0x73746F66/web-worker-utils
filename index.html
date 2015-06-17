@@ -1,128 +1,86 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Web Worker Demo</title>
-    <link href="/styles/main.css" rel="stylesheet">
-</head>
-<body>
-  <h1 id="greeting"></h1>
-  
-  <pre id="log">
-      
-  </pre>
-  
-  <script type="text/javascript">
-    if (typeof SharedWorker != 'undefined') {
-        var worker = new Worker('/js/worker.js');
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>Web Worker Demo</title>
+        <meta name="description" content="">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="cleartype" content="on">
+
+        <!-- iPad and iPad mini (with @2× display) iOS ≥ 8 -->
+        <link rel="apple-touch-icon-precomposed" sizes="180x180" href="img/touch/apple-touch-icon-180x180-precomposed.png">
         
-        worker.onerror = function(e) {
-            document.getElementById('log').insertAdjacentHTML('beforeEnd','error encountered'+"\n"); 
-            console.error('Ops, something bad occurred!', e);
-        };
-        worker.onmessage = function(e) {
-            document.getElementById('log').insertAdjacentHTML('beforeEnd', JSON.stringify(e.data)+"\n" ); 
-            console.debug(e.data);
-        };
+        <!-- iPad 3+ (with @2× display) iOS ≥ 7 -->
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/touch/apple-touch-icon-152x152-precomposed.png">
+        <!-- iPad (with @2× display) iOS ≤ 6 -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
+        <!-- iPhone (with @2× and @3 display) iOS ≥ 7 -->
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/touch/apple-touch-icon-120x120-precomposed.png">
+        <!-- iPhone (with @2× display) iOS ≤ 6 -->
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
+        <!-- iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7 -->
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="img/touch/apple-touch-icon-76x76-precomposed.png">
+        <!-- iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6 -->
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
+        <!-- Android Stock Browser and non-Retina iPhone and iPod Touch -->
+        <link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
+        <!-- Fallback for everything else -->
+        <link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
+
+        <!--
+            Chrome 31+ has home screen icon 192×192 (the recommended size for multiple resolutions).
+            If it’s not defined on that size it will take 128×128.
+        -->
+        <link rel="icon" sizes="192x192" href="img/touch/touch-icon-192x192.png">
+        <link rel="icon" sizes="128x128" href="img/touch/touch-icon-128x128.png">
+
+        <!-- Tile icon for Win8 (144x144 + tile color) -->
+        <meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileColor" content="#222222">
+
+        <!-- SEO: If mobile URL is different from desktop URL, add a canonical link to the desktop page -->
+        <!--
+        <link rel="canonical" href="http://www.example.com/" >
+        -->
+
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="theme-color" content="#379239">
+
+        <!-- For iOS web apps. Delete if not needed. https://github.com/h5bp/mobile-boilerplate/issues/94 -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="">
+
+        <!-- This script prevents links from opening in Mobile Safari. https://gist.github.com/1042026 -->
+        <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
+
+        <link rel="stylesheet" href="styles/normalize.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+
+        <h1 id="greeting"></h1>
         
-        worker.postMessage({
-          do: 'Core/start'
-        });
-/*
-        setTimeout(function(){
+        <pre id="log">
+            
+        </pre>
 
-            worker.postMessage({
-                do: 'Demo/echo',
-                args: 'testing'
-            });
+        <script src="js/vendor/jquery-2.1.3.min.js"></script>
+        <script src="js/helper.js"></script>
+        <script src="js/main.js"></script>
 
-        }, 200);
-
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'DB/add',
-                args: { taskTitle: 'title.value', hours: 'hours.value', minutes: 'minutes.value', day: 'day.value', month: 'month.value', year: 'year.value', notified: false }
-            });
-
-        }, 500);
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'DB/get',
-                args: 1
-            });
-
-        }, 1000);
-
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'DB/add',
-                args: { taskTitle: 'title.value', hours: 'hours.value', minutes: 'minutes.value', day: 'day.value', month: 'month.value', year: 'year.value', notified: false }
-            });
-
-        }, 1500);
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'DB/delete',
-                args: 1
-            });
-
-        }, 2000);
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'DB/get',
-                args: 1
-            });
-
-        }, 2500);
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'DB/list'
-            });
-
-        }, 3000);
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'Demo/info'
-            });
-
-        }, 800);
-
-        setTimeout(function(){
-
-            worker.postMessage({
-                do: 'Demo/fetch',
-                args: {url:'https://preview.c9.io/chrisdlangton/web-workers/test.json'}
-            });
-
-        }, 4000);
-
-*/
-    }
-/*
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/chrisdlangton/web-workers/js/service.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ',    registration.scope);
-      }).catch(function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    }
-*/
-  </script>
-</body>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script> -->
+    </body>
 </html>
