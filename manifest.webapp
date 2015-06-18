@@ -1,35 +1,26 @@
 {
-	"version": "0.1",
-	"name": "Your App",
-	"description": "Your new awesome Open Web App",
-	"launch_path": "/index.html",
-	"appcache_path": "/offline.appcache",
-	"icons": {
-		"16": "/img/icons/appicon-16.png",
-		"48": "/img/icons/appicon-48.png",
-		"128": "/img/icons/appicon-128.png"
-	},
-	"developer": {
-		"name": "Your Name",
-		"url": "http://yourawesomeapp.com"
-	},
-	"installs_allowed_from": ["*"],
-	"locales": {
-		"es": {
-			"description": "Su nueva aplicación impresionante Open Web",
-			"developer": {
-				"url": "http://yourawesomeapp.com"
-			}
-		},
-		"it": {
-			"description": "Il vostro nuovo fantastico Open Web App",
-			"developer": {
-				"url": "http://yourawesomeapp.com"
-			}
-		}
-	},
-	"default_locale": "en",
-	"permissions": {
-		"systemXHR": {}
-	}
+  "version": "1.0.0",
+  "name": "Mobile Boilerplate",
+  "launch_path": "/index.html",
+  "description": "A front-end template that helps you build fast, modern mobile web apps.",
+  "icons": {
+    "60": "/img/touch/touch-icon-60x60.png",
+    "128": "/img/touch/touch-icon-128x128.png"
+  },
+  "developer": {
+    "name": "",
+    "url": ""
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "Mobile Boilerplate",
+      "description": "A front-end template that helps you build fast, modern mobile web apps."
+    }
+  }
 }

@@ -18,9 +18,16 @@ http.createServer(function(request, response) {
     '.jpg':     "image/jpeg",
     '.png':     "image/png",
     '.ico':     "image/x-icon",
+    '.svg':     "image/svg-xml",
     '.appcache':"text/cache-manifest",
     '.webapp':  "application/x-web-app-manifest+json",
-    '.xml':     "application/xml"
+    '.xml':     "application/xml",
+    'sisx':     "application/octet-stream",
+    'sis':      "application/vnd.symbian.install",
+    'jar':      "application/x-java-archive",
+    'jad':      "text/ovnd.sun.j2me.app-descriptor",
+    'bbaw':     "application/x-bb-appworld",
+    'xloc':     "text/vnd.rim.location.xloc"
   };
 
   fs.exists(filename, function(exists) {
@@ -44,6 +51,7 @@ http.createServer(function(request, response) {
       var headers = {};
       var contentType = contentTypesByExtension[path.extname(filename)];
       if (contentType) headers["Content-Type"] = contentType;
+      headers["Cache-Control"] = 'no-transform';
       response.writeHead(200, headers);
       response.write(file, "binary");
       response.end();

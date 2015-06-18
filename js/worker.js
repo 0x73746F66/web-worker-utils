@@ -14,9 +14,9 @@
 
   modules['Core']   = modules['Core'] || new Core();
   modules['DB']     = modules['DB']   || new DB(self, dbName, dbVersion);
-  modules['File']   = modules['File'] || new File(self);
+  //modules['File']   = modules['File'] || new File(self);
   modules['xhr']    = modules['xhr']  || new XhrHelper();
-  modules['Demo']   = modules['Demo'] || new Demo();
+  //modules['Demo']   = modules['Demo'] || new Demo();
   self.modules      = modules;
   
   self.onmessage = function(e) {

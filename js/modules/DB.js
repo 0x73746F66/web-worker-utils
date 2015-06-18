@@ -100,7 +100,35 @@ DB.fn = DB.prototype = {
       }
     }
   },
-  update: function() {
+  truncate: function() {
+    var that = this;
+
+    // open a read/write db transaction, ready for adding the data
+    var transaction = that.modules['DB'].db.transaction([that.modules['DB'].name], "readwrite");
+    // report on the success of opening the transaction
+    transaction.oncomplete = function() {
+      that.postMessage('Transaction completed: database truncate finished.');
+    };
+    transaction.onerror = function() {
+      that.postMessage('Transaction not opened due to error: ' + transaction.error + '');
+    };
+    // call an object store that's already been added to the database
+    transaction.objectStore(that.modules['DB'].name).clear();
+  },
+  update: function(obj) {
+    var that = this;
+
+    // open a read/write db transaction, ready for adding the data
+    var transaction = that.modules['DB'].db.transaction([that.modules['DB'].name], "readwrite");
+    // report on the success of opening the transaction
+    transaction.oncomplete = function() {
+      that.postMessage('Transaction completed: database update finished.');
+    };
+    transaction.onerror = function() {
+      that.postMessage('Transaction not opened due to error: ' + transaction.error + '');
+    };
+    // call an object store that's already been added to the database
+    transaction.objectStore(that.modules['DB'].name).put(obj);
   },
   delete: function(id) {
     var that = this;

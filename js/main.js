@@ -14,16 +14,9 @@ if (typeof Worker != 'undefined') {
     worker.postMessage({
       do: 'Core/start'
     });
+    
+
 /*
-    setTimeout(function(){
-
-        worker.postMessage({
-            do: 'Demo/echo',
-            args: 'testing'
-        });
-
-    }, 200);
-
 
     setTimeout(function(){
 
@@ -43,16 +36,24 @@ if (typeof Worker != 'undefined') {
 
     }, 1000);
 
+    setTimeout(function(){
+
+        worker.postMessage({
+            do: 'DB/update',
+            args: { id: 2, taskTitle: 'title.value', hours: 'hours.value', minutes: 'minutes.value', day: 'day.value', month: 'month.value', year: 'year.value', notified: true }
+        });
+
+    }, 3000);
+
 
     setTimeout(function(){
 
         worker.postMessage({
-            do: 'DB/add',
-            args: { taskTitle: 'title.value', hours: 'hours.value', minutes: 'minutes.value', day: 'day.value', month: 'month.value', year: 'year.value', notified: false }
+            do: 'DB/truncate'
         });
 
-    }, 1500);
-
+    }, 5000);
+    
     setTimeout(function(){
 
         worker.postMessage({
@@ -61,31 +62,6 @@ if (typeof Worker != 'undefined') {
         });
 
     }, 2000);
-
-    setTimeout(function(){
-
-        worker.postMessage({
-            do: 'DB/get',
-            args: 1
-        });
-
-    }, 2500);
-
-    setTimeout(function(){
-
-        worker.postMessage({
-            do: 'DB/list'
-        });
-
-    }, 3000);
-
-    setTimeout(function(){
-
-        worker.postMessage({
-            do: 'Demo/info'
-        });
-
-    }, 800);
 
     setTimeout(function(){
 
