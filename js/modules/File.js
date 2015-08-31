@@ -16,7 +16,6 @@ var File = function(worker) {
       }
     }
   }
-  
   try {
     this.fs = requestFileSystemSync(TEMPORARY, 1024*1024 /*1MB*/);
 
@@ -30,5 +29,15 @@ var File = function(worker) {
   return this;
 };
 File.fn = File.prototype = {
+  read: function(files){
+    var buffers = [];
+    // Read each file synchronously as an ArrayBuffer and
+    // stash it in a global array to return to the main app.
+    [].forEach.call(files, function(file) {
+      var reader = new FileReaderSync();
+      buffers.push(reader.readAsDataURL(file));
+    });
   
+    postMessage(buffers);
+  }
 };

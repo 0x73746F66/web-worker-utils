@@ -35,12 +35,15 @@ var DB = function(worker, name, version) {
     // Create an objectStore for this database
     var objectStore = db.createObjectStore(name, { keyPath: 'id', autoIncrement: true });
     // define what data items the objectStore will contain
-    objectStore.createIndex("hours", "hours", { unique: false });
-    objectStore.createIndex("minutes", "minutes", { unique: false });
-    objectStore.createIndex("day", "day", { unique: false });
-    objectStore.createIndex("month", "month", { unique: false });
-    objectStore.createIndex("year", "year", { unique: false });
-    objectStore.createIndex("notified", "notified", { unique: false });
+    objectStore.createIndex("name", "name", { unique: true });
+    objectStore.createIndex("hp", "hp", { unique: false });
+    objectStore.createIndex("spd", "spd", { unique: false });
+    objectStore.createIndex("atk", "atk", { unique: false });
+    objectStore.createIndex("def", "def", { unique: false });
+    objectStore.createIndex("res", "res", { unique: false });
+    objectStore.createIndex("acc", "acc", { unique: false });
+    objectStore.createIndex("cr", "cr", { unique: false });
+    objectStore.createIndex("cd", "cd", { unique: false });
     
     worker.postMessage('Object store created.');
   };

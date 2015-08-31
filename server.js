@@ -19,6 +19,7 @@ http.createServer(function(request, response) {
     '.png':     "image/png",
     '.ico':     "image/x-icon",
     '.svg':     "image/svg-xml",
+    '.rss':     "image/rss+xml",
     '.appcache':"text/cache-manifest",
     '.webapp':  "application/x-web-app-manifest+json",
     '.xml':     "application/xml",

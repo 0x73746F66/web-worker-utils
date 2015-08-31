@@ -1,8 +1,12 @@
 CACHE MANIFEST
-# v0.0.1  change this to force update
+# v0.0.1  //change this value to force a browser update
 
 CACHE:
 index.html
+styles/main.css
+styles/normalize.css
+js/helper.js
+js/main.js
 
 NETWORK:
 *
